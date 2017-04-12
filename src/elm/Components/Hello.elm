@@ -7,6 +7,11 @@ import String
 -- hello component
 hello : Int -> Html a
 hello model =
-  div
-    [ class "h1" ]
-    [ text ( "Hello, Elm" ++ ( "!" |> String.repeat model ) ) ]
+  let
+    chars =
+      List.repeat model (i [ class "fa fa-times" ] [])
+  in
+    div [] [
+      h1 [] (List.concat [[ text "Hello, Elm" ], chars])
+    ]
+
