@@ -2,9 +2,9 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
---import Html.Events exposing ( onClick )
+import Html.Events exposing ( onInput )
 
-import Components.Icon exposing ( Icon, loadIcons, renderIcon )
+import Components.Icon exposing ( .. )
 
 
 -- APP
@@ -21,13 +21,15 @@ main =
 -- MODEL
 
 type alias Model = {
-  icons: List Icon
+  icons: List Icon,
+  filter: String
 }
 
 init : List String -> (Model, Cmd Msg)
 init rawKeys = (
     {
-      icons = loadIcons rawKeys
+      icons = loadIcons rawKeys,
+      filter = ""
     },
     Cmd.none
   )
@@ -40,23 +42,39 @@ subscriptions model =
 
 
 -- UPDATE
-type Msg = NoOp
+type Msg =
+  SetFilter String
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
-    NoOp -> (model, Cmd.none)
+    SetFilter filter ->
+      ({ model | filter = filter }, Cmd.none)
 
 
 -- VIEW
 view : Model -> Html Msg
 view model =
-  div [ class "container" ] [
-    div [ class "row" ] [
-      div [ class "col-xs-12" ] [
-        ul [] (
-          List.map (\icon -> li [] [ renderIcon icon ]) model.icons
-        )
+  div [] [
+    div [ class "navbar navbar-default navbar-static-top" ] [
+      div [ class "container" ] [
+        div [ class "navbar-header"] [
+          span [ class "navbar-brand" ] [
+            text "Font Awesomelm"
+          ]
+        ],
+        Html.form [ class "navbar-form navbar-right filter-form" ] [
+          div [ class "form-group" ] [
+            input [ placeholder "Filter", onInput SetFilter, class "form-control"] []
+          ]
+        ]
+      ]
+    ],
+    div [ class "container" ] [
+      div [ class "row" ] [
+        div [ class "col-xs-12" ] [
+          renderIconList model.icons model.filter
+        ]
       ]
     ]
   ]

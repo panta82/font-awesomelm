@@ -22,7 +22,7 @@ loadIcons rawKeys =
       tokens = List.map (\m -> String.toLower m.match) matches
     in
       { tokens = tokens
-      , name = String.join "_" tokens
+      , name = String.join " " tokens
       , class = "fa-" ++ String.join "-" tokens
       }
   )
@@ -35,3 +35,13 @@ renderIcon icon =
       text icon.class
     ]
   ]
+
+renderIconList: List Icon -> String -> Html a
+renderIconList icons filter =
+  let
+    filterRegex = Regex.regex filter
+    items = icons
+      |> List.filter (\icon -> Regex.contains filterRegex icon.name)
+      |> List.map (\icon -> li [] [ renderIcon icon ])
+  in
+    ul [] items

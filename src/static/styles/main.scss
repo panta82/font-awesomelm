@@ -59,3 +59,16 @@
 // Font awesome
 $fa-font-path: "~font-awesome/fonts/";
 @import '~font-awesome/scss/font-awesome.scss';
+
+@media (min-width: $screen-sm-min) {
+	.filter-form {
+		width: 50%;
+		> .form-group {
+			display: block;
+			> .form-control {
+				display: block;
+				width: 100%;
+			}
+		}
+	}
+}
