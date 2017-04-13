@@ -1,4 +1,3 @@
-// pull in desired CSS/SASS files
 require('./styles/main.scss');
 
 var faVars = require('!sass-to-js-var!../../node_modules/font-awesome/scss/_variables.scss');

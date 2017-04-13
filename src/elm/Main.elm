@@ -1,10 +1,10 @@
 module Main exposing (..)
+
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing ( onClick )
+--import Html.Events exposing ( onClick )
 
--- component import example
-import Components.Hello exposing ( hello )
+import Components.Icon exposing ( Icon, loadIcons, renderIcon )
 
 
 -- APP
@@ -20,20 +20,14 @@ main =
 
 -- MODEL
 
-type alias Glyph = {
-  name: String
-}
-
 type alias Model = {
-  number: Int,
-  items: List Glyph
+  icons: List Icon
 }
 
 init : List String -> (Model, Cmd Msg)
-init glyphNames = (
+init rawKeys = (
     {
-      number = 0,
-      items = List.map (\x -> { name = x }) glyphNames
+      icons = loadIcons rawKeys
     },
     Cmd.none
   )
@@ -46,18 +40,12 @@ subscriptions model =
 
 
 -- UPDATE
-type Msg = NoOp | Increment
+type Msg = NoOp
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     NoOp -> (model, Cmd.none)
-    
-    Increment -> (
-      {
-        model | number = model.number + 1
-      },
-      Cmd.none)
 
 
 -- VIEW
@@ -66,31 +54,9 @@ view model =
   div [ class "container" ] [
     div [ class "row" ] [
       div [ class "col-xs-12" ] [
-        div [ class "jumbotron", style [("margin-top", "30px"), ( "text-align", "center" )] ] [
-          img [ src "static/img/elm.jpg", style styles.img ] []
-          , hello model.number
-          , p [] [ text ( "Elm Webpack Starter" ) ]
-          , button [ class "btn btn-primary btn-lg", onClick Increment ] [
-            span[ class "fa fa-star" ] []
-            , span[] [ text "FTW!" ]
-          ]
-        ]
-        , div [] [
-          ul [] (
-            List.map (\glyph -> li [] [ text glyph.name ]) model.items
-          )
-        ]
+        ul [] (
+          List.map (\icon -> li [] [ renderIcon icon ]) model.icons
+        )
       ]
     ]
   ]
-
-
--- CSS STYLES
-styles : { img : List ( String, String ) }
-styles =
-  {
-    img =
-      [ ( "width", "33%" )
-      , ( "border", "4px solid #337AB7")
-      ]
-  }
