@@ -1,9 +1,10 @@
-module Main exposing (..)
+port module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing ( onInput )
 
+import Msg exposing (..)
 import Components.Icon exposing ( .. )
 
 
@@ -19,7 +20,6 @@ main =
 
 
 -- MODEL
-
 type alias Model = {
   icons: List Icon,
   filter: String
@@ -41,15 +41,19 @@ subscriptions model =
   Sub.none
 
 
--- UPDATE
-type Msg =
-  SetFilter String
+-- PORTS
+port copyToClipboard : String -> Cmd msg
 
+
+-- UPDATE
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     SetFilter filter ->
       ({ model | filter = filter }, Cmd.none)
+    
+    CopyToClipboard name ->
+      (model, copyToClipboard name)
 
 
 -- VIEW

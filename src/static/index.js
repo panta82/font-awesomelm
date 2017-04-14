@@ -4,4 +4,12 @@ var faVars = require('!sass-to-js-var!../../node_modules/font-awesome/scss/_vari
 var faNames = Object.keys(faVars);
 
 var Elm = require('../elm/Main');
-Elm.Main.embed(document.getElementById('main'), faNames);
+var app = Elm.Main.embed(document.getElementById('main'), faNames);
+
+app.ports.copyToClipboard.subscribe(function (iconName) {
+	var element = document.querySelector('.icon-' + iconName);
+	var range = document.createRange();
+	range.selectNode(element);
+	window.getSelection().addRange(range);
+	document.execCommand('copy');
+});

@@ -2,8 +2,11 @@ module Components.Icon exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing ( onClick )
 import String
 import Regex
+
+import Msg exposing (..)
 
 type alias Icon = {
   tokens: List String,
@@ -27,16 +30,16 @@ loadIcons rawKeys =
       }
   )
 
-renderIcon : Icon -> Html a
+renderIcon : Icon -> Html Msg
 renderIcon icon =
-  span [] [
+  span [ class ("icon-" ++ icon.class) ] [
     i [ class ("fa " ++ icon.class) ] [],
-    span [] [
+    span [ onClick (CopyToClipboard icon.class) ] [
       text icon.class
     ]
   ]
 
-renderIconList: List Icon -> String -> Html a
+renderIconList: List Icon -> String -> Html Msg
 renderIconList icons filter =
   let
     filterRegex = Regex.regex filter
