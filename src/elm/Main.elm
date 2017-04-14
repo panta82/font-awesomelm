@@ -52,8 +52,8 @@ update msg model =
     SetFilter filter ->
       ({ model | filter = filter }, Cmd.none)
     
-    CopyToClipboard name ->
-      (model, copyToClipboard name)
+    CopyToClipboard selector ->
+      (model, copyToClipboard selector)
 
 
 -- VIEW

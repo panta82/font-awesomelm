@@ -30,12 +30,12 @@ loadIcons faVarsTxt =
 
 renderIcon : Icon -> Html Msg
 renderIcon icon =
-  div [ class "icon icon-" ++ icon.name ] [
+  div [ class ("icon icon-" ++ icon.name) ] [
     i [ class ("fa " ++ icon.class) ] [],
     div [] [
-      span [ class "name" onClick (CopyToClipboard (".icon-" ++ icon.name ++ " .name")) ] [ text icon.name ],
+      span [ class "name", onClick (CopyToClipboard (".icon-" ++ icon.name ++ " .name")) ] [ text icon.name ],
       br [] [],
-      span [ class "class-name" onClick (CopyToClipboard (".icon-" ++ icon.name ++ " .class-name")) ] [ text icon.class ]
+      span [ class "class-name", onClick (CopyToClipboard (".icon-" ++ icon.name ++ " .class-name")) ] [ text icon.class ]
     ]
   ]
 
