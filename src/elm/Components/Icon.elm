@@ -9,42 +9,43 @@ import Regex
 import Msg exposing (..)
 
 type alias Icon = {
-  tokens: List String,
   name: String,
   class: String
 }
 
-loadIcons : List String -> List Icon
-loadIcons rawKeys =
-  rawKeys
-  |> List.filter (String.startsWith "faVar")
-  |> List.map (\rawKey -> 
+loadIcons : String -> List Icon
+loadIcons faVarsTxt =
+  faVarsTxt
+  |> String.lines
+  |> List.filter (String.startsWith "$fa-var-")
+  |> List.map (\rawLine -> 
     let
-      rawTokens = String.dropLeft 5 rawKey
-      matches = Regex.find Regex.All (Regex.regex "([A-Z0-9][a-z0-9]*)") rawTokens
-      tokens = List.map (\m -> String.toLower m.match) matches
+      columnIndex = Maybe.withDefault -1 (String.indexes ":" rawLine |> List.head)
+      dashedName = String.slice 8 columnIndex rawLine
     in
-      { tokens = tokens
-      , name = String.join " " tokens
-      , class = "fa-" ++ String.join "-" tokens
+      { name = Regex.replace Regex.All (Regex.regex "\\-") (\_ -> "_") dashedName
+      , class = "fa-" ++ dashedName
       }
   )
 
 renderIcon : Icon -> Html Msg
 renderIcon icon =
-  span [ class ("icon-" ++ icon.class) ] [
+  div [ class "icon icon-" ++ icon.name ] [
     i [ class ("fa " ++ icon.class) ] [],
-    span [ onClick (CopyToClipboard icon.class) ] [
-      text icon.class
+    div [] [
+      span [ class "name" onClick (CopyToClipboard (".icon-" ++ icon.name ++ " .name")) ] [ text icon.name ],
+      br [] [],
+      span [ class "class-name" onClick (CopyToClipboard (".icon-" ++ icon.name ++ " .class-name")) ] [ text icon.class ]
     ]
   ]
 
 renderIconList: List Icon -> String -> Html Msg
 renderIconList icons filter =
   let
-    filterRegex = Regex.regex filter
+    filterTokens = Regex.split Regex.All (Regex.regex "[ _\\-.]+") filter
+    filterRegex = Regex.regex (String.join "_" filterTokens)
     items = icons
       |> List.filter (\icon -> Regex.contains filterRegex icon.name)
       |> List.map (\icon -> li [] [ renderIcon icon ])
   in
-    ul [] items
+    ul [ class "icons" ] items

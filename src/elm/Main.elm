@@ -9,7 +9,7 @@ import Components.Icon exposing ( .. )
 
 
 -- APP
-main : Program (List String) Model Msg
+main : Program String Model Msg
 main =
   Html.programWithFlags {
     view = view,
@@ -25,10 +25,10 @@ type alias Model = {
   filter: String
 }
 
-init : List String -> (Model, Cmd Msg)
-init rawKeys = (
+init : String -> (Model, Cmd Msg)
+init faVarsTxt = (
     {
-      icons = loadIcons rawKeys,
+      icons = loadIcons faVarsTxt,
       filter = ""
     },
     Cmd.none
