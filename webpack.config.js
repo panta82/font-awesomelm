@@ -84,7 +84,6 @@ if (TARGET_ENV === 'development') {
 				{
 					test: /\.(woff|woff2|ttf|eot|svg)(\?v=[a-z0-9]\.[a-z0-9]\.[a-z0-9])?$/,
 					loader: 'url-loader?limit=100000'
-					//loader: 'file?name=static/fonts/[name].[ext]'
 				}
 			]
 		}
@@ -114,6 +113,10 @@ if (TARGET_ENV === 'production') {
 						'postcss-loader',
 						'sass-loader'
 					])
+				},
+				{
+					test: /\.(woff|woff2|ttf|eot|svg)(\?v=[a-z0-9]\.[a-z0-9]\.[a-z0-9])?$/,
+					loader: 'url?limit=10000&name=[name].[ext]?[hash]'
 				}
 			]
 		},
@@ -125,7 +128,7 @@ if (TARGET_ENV === 'production') {
 					to: 'static/img/'
 				},
 				{
-					from: 'src/favicon.ico'
+					from: 'src/favicon.png'
 				},
 			]),
 
