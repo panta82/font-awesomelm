@@ -60,14 +60,12 @@ update msg model =
 view : Model -> Html Msg
 view model =
   div [] [
-    div [ class "navbar navbar-default navbar-static-top" ] [
+    div [ class "toolbar" ] [
       div [ class "container" ] [
-        div [ class "navbar-header"] [
-          span [ class "navbar-brand" ] [
-            text "Font Awesomelm"
-          ]
+        span [ class "site-title" ] [
+          text "F"
         ],
-        Html.form [ class "navbar-form navbar-right filter-form" ] [
+        Html.form [ class "filter-form" ] [
           div [ class "form-group" ] [
             input [ placeholder "Filter", onInput SetFilter, class "form-control"] []
           ]

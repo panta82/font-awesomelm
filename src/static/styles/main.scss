@@ -24,22 +24,22 @@
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_dropdowns.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_button-groups.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_input-groups.scss";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/_navs.scss";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/_navbar.scss";
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap/_navs.scss";
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap/_navbar.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_breadcrumbs.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_pagination.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_pager.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_labels.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_badges.scss";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/_jumbotron.scss";
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap/_jumbotron.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_thumbnails.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_alerts.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_progress-bars.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_media.scss";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/_list-group.scss";
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap/_list-group.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_panels.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_responsive-embed.scss";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/_wells.scss";
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap/_wells.scss";
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_close.scss";
 
 // Components w/ JavaScript
@@ -49,11 +49,11 @@
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap/_carousel.scss";
 
 // Utility classes
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/_utilities.scss";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/_responsive-utilities.scss";
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap/_utilities.scss";
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap/_responsive-utilities.scss";
 
 // Mixins
-@import '~bootstrap-sass/assets/stylesheets/bootstrap/_mixins.scss';
+// @import '~bootstrap-sass/assets/stylesheets/bootstrap/_mixins.scss';
 
 //*********************************************************************************************
 // Font awesome
@@ -63,15 +63,41 @@ $fa-font-path: "~font-awesome/fonts/";
 //*********************************************************************************************
 // Custon styles
 
-// Filter
-@media (min-width: $screen-sm-min) {
+// Global
+
+body {
+	overflow-y: scroll; // No jumpy scrollbar
+}
+
+// Navbar
+
+.toolbar {
+	background: $navbar-default-bg;
+	border-bottom: 1px solid $navbar-default-border;
+	margin-bottom: 20px;
+
+	.site-title {
+		float: left;
+		background: #fc00c8;
+		margin: 0;
+		color: white;
+		font-weight: bolder;
+		font-family: serif;
+		font-size: 30px;
+		height: 45px;
+		width: 40px;
+		text-align: center;
+	}
+
 	.filter-form {
-		width: 50%;
+		display: block;
+		margin-left: 47px;
+		margin-top: 5px;
 		> .form-group {
 			display: block;
+			margin: 0;
 			> .form-control {
 				display: block;
-				width: 100%;
 			}
 		}
 	}
