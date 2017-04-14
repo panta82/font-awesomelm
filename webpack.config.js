@@ -126,6 +126,9 @@ if (TARGET_ENV === 'production') {
 				{
 					from: 'src/favicon.png'
 				},
+				{
+					from: 'src/CNAME'
+				}
 			]),
 
 			new webpack.optimize.OccurenceOrderPlugin(),
