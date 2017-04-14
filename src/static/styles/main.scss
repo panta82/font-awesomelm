@@ -60,6 +60,10 @@
 $fa-font-path: "~font-awesome/fonts/";
 @import '~font-awesome/scss/font-awesome.scss';
 
+//*********************************************************************************************
+// Custon styles
+
+// Filter
 @media (min-width: $screen-sm-min) {
 	.filter-form {
 		width: 50%;
@@ -68,6 +72,53 @@ $fa-font-path: "~font-awesome/fonts/";
 			> .form-control {
 				display: block;
 				width: 100%;
+			}
+		}
+	}
+}
+
+// Icons
+.icons {
+	$iconSize: 40px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	> li {
+		display: inline-block;
+		margin-right: 15px;
+		margin-bottom: 5px;
+	}
+
+	@mixin clickable() {
+		cursor: pointer;
+		&:hover {
+			text-decoration: underline;
+			color: $brand-primary;
+		}
+	}
+
+	.icon {
+		> i {
+			float: left;
+			font-size: $iconSize;
+			min-width: $iconSize * 1.5;
+		}
+		> div {
+			float: left;
+			line-height: $iconSize / 2;
+			width: 210px; // Fit 4 columns in bs container
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			> .name {
+				@include clickable;
+				font-weight: bold;
+			}
+			> .class-name {
+				@include clickable;
+				color: $text-muted;
+				font-family: monospace;
 			}
 		}
 	}

@@ -6,42 +6,43 @@ import String
 import Regex
 
 type alias Icon = {
-  tokens: List String,
   name: String,
   class: String
 }
 
-loadIcons : List String -> List Icon
-loadIcons rawKeys =
-  rawKeys
-  |> List.filter (String.startsWith "faVar")
-  |> List.map (\rawKey -> 
+loadIcons : String -> List Icon
+loadIcons faVarsTxt =
+  faVarsTxt
+  |> String.lines
+  |> List.filter (String.startsWith "$fa-var-")
+  |> List.map (\rawLine -> 
     let
-      rawTokens = String.dropLeft 5 rawKey
-      matches = Regex.find Regex.All (Regex.regex "([A-Z0-9][a-z0-9]*)") rawTokens
-      tokens = List.map (\m -> String.toLower m.match) matches
+      columnIndex = Maybe.withDefault -1 (String.indexes ":" rawLine |> List.head)
+      dashedName = String.slice 8 columnIndex rawLine
     in
-      { tokens = tokens
-      , name = String.join " " tokens
-      , class = "fa-" ++ String.join "-" tokens
+      { name = Regex.replace Regex.All (Regex.regex "\\-") (\_ -> "_") dashedName
+      , class = "fa-" ++ dashedName
       }
   )
 
 renderIcon : Icon -> Html a
 renderIcon icon =
-  span [] [
+  div [ class "icon" ] [
     i [ class ("fa " ++ icon.class) ] [],
-    span [] [
-      text icon.class
+    div [] [
+      span [ class "name" ] [ text icon.name ],
+      br [] [],
+      span [ class "class-name" ] [ text icon.class ]
     ]
   ]
 
 renderIconList: List Icon -> String -> Html a
 renderIconList icons filter =
   let
-    filterRegex = Regex.regex filter
+    filterTokens = Regex.split Regex.All (Regex.regex "[ _\\-.]+") filter
+    filterRegex = Regex.regex (String.join "_" filterTokens)
     items = icons
       |> List.filter (\icon -> Regex.contains filterRegex icon.name)
       |> List.map (\icon -> li [] [ renderIcon icon ])
   in
-    ul [] items
+    ul [ class "icons" ] items
